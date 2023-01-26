@@ -40,4 +40,18 @@
   &--purple {
     background-color: var(--clr-purple-400);
   }
+
+  &--red {
+    background-color: var(--clr-red-400);
+  }
+}
+
+.floating-icon {
+  position: absolute;
+  top: 0;
+  left: var(--spacing-12);
+  width: 3.5rem;
+  height: 3.5rem;
+
+  transform: translateY(-50%);
 }

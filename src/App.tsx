@@ -6,6 +6,7 @@ import "./Common.scss";
 const Home = lazy(() => import("./pages/Home"));
 const Feedback = lazy(() => import("./pages/Feedback"));
 const NewFeedback = lazy(() => import("./pages/feedback/New"));
+const EditFeedback = lazy(() => import("./pages/feedback/Edit"));
 
 const App: Component = () => {
   return (
@@ -13,6 +14,7 @@ const App: Component = () => {
       <Route path="/" component={Home}></Route>
       <Route path="/feedback/new" component={NewFeedback}></Route>
       <Route path="/feedback/:id" component={Feedback}></Route>
+      <Route path="/feedback/:id/edit" component={EditFeedback}></Route>
     </Routes>
   );
 };

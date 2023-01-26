@@ -23,9 +23,11 @@ const Feedback: Component = () => {
   return (
     <div class="container spacer">
       <header class="feedback-header">
-        <Back />
+        <Back href="/" />
 
-        <button class="feedback-header__edit">Edit Feedback</button>
+        <A href="./edit" class="btn btn--blue feedback-header__edit">
+          Edit Feedback
+        </A>
       </header>
 
       <main class="spacer">

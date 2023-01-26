@@ -3,9 +3,13 @@ import { Component } from "solid-js";
 
 import "./Back.scss";
 
-const Back: Component = () => {
+interface BackProps {
+  href: string;
+}
+
+const Back: Component<BackProps> = (props) => {
   return (
-    <A class="go-back" href="/">
+    <A class="go-back" href={props.href}>
       <img src="/assets/shared/icon-arrow-left.svg" alt="" />
       Go Back
     </A>
