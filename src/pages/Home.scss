@@ -48,6 +48,7 @@ aside {
     padding: var(--spacing-1) var(--spacing-4);
     margin-bottom: var(--spacing-2);
     border-radius: var(--radius);
+    border: none;
 
     font-size: var(--text-sm);
     text-transform: capitalize;
@@ -68,8 +69,7 @@ aside {
       background-color: var(--clr-blue-400);
       color: var(--clr-white);
 
-      &:hover,
-      &:focus {
+      &:hover {
         background-color: var(--clr-blue-600);
       }
     }
