@@ -7,6 +7,7 @@ import Comment from "../components/Comment";
 import "./Feedback.scss";
 
 import data from "../data.json";
+import Back from "../components/Back";
 
 const Feedback: Component = () => {
   const { id } = useParams();
@@ -22,10 +23,7 @@ const Feedback: Component = () => {
   return (
     <div class="container spacer">
       <header class="feedback-header">
-        <A class="feedback-header__back" href="/">
-          <img src="/assets/shared/icon-arrow-left.svg" alt="" />
-          Go back
-        </A>
+        <Back />
 
         <button class="feedback-header__edit">Edit Feedback</button>
       </header>
