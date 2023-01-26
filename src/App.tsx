@@ -9,6 +9,7 @@ const App: Component = () => {
   return (
     <Routes>
       <Route path="/" component={Home}></Route>
+      <Route path="/feedback/:id" component={Feedback}></Route>
     </Routes>
   );
 };
