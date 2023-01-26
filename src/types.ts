@@ -1,0 +1,21 @@
+export interface Comment {
+  id?: number;
+  content: string;
+  replyingTo?: string;
+  user: {
+    image: string;
+    name: string;
+    username: string;
+  };
+  replies?: Array<Comment>;
+}
+
+export interface Request {
+  id: number;
+  title: string;
+  category: string;
+  upvotes: number;
+  status: string;
+  description: string;
+  comments?: Array<Comment>;
+}

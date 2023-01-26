@@ -1,0 +1,136 @@
+/* https://piccalil.li/blog/a-modern-css-reset/ */
+
+:root {
+  --clr-white: hsl(0, 0%, 100%);
+  --clr-grey-200: hsl(231, 100%, 97%);
+  --clr-grey-300: hsl(230, 60%, 98%);
+  --clr-grey-400: hsl(222, 19%, 83%);
+  --clr-grey-500: hsl(225, 18%, 60%);
+  --clr-grey-600: hsl(224, 20%, 49%);
+
+  --clr-red-200: hsl(14, 83%, 74%);
+  --clr-red-300: hsl(346, 77%, 61%);
+  --clr-red-400: hsl(0, 67%, 53%);
+  --clr-purple-100: hsl(262, 100%, 95%);
+  --clr-purple-200: hsl(282, 82.7%, 61.4%);
+  --clr-purple-300: hsl(274, 91%, 59%);
+  --clr-purple-400: hsl(282, 83%, 52%);
+
+  --clr-blue-200: hsl(204, 94%, 68%);
+  --clr-blue-300: hsl(201, 85%, 54%);
+  --clr-blue-400: hsl(230, 76%, 59%);
+  --clr-blue-600: hsl(231, 33%, 34%);
+  --clr-blue-800: hsl(230, 31%, 31%);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-16: 4rem;
+
+  --radius: 0.5rem;
+}
+
+body {
+  font-family: "Jost", sans-serif;
+  background-color: var(--clr-grey-300);
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition: opacity 100ms ease-out;
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+  }
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.container {
+  max-width: 70rem;
+  margin: 6rem auto;
+}
