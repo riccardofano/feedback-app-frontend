@@ -12,6 +12,7 @@
 }
 
 .btn {
+  display: inline-block;
   border: none;
   border-radius: var(--radius);
   padding: var(--spacing-2) var(--spacing-4);

@@ -16,14 +16,7 @@
     margin-bottom: var(--spacing-4);
   }
 
-  & button {
-    background-color: var(--clr-purple-400);
-    color: var(--clr-white);
+  & .btn {
     margin-top: var(--spacing-10);
-    padding: var(--spacing-2) var(--spacing-4);
-    border: none;
-    border-radius: var(--radius);
-    font-size: var(--text-sm);
-    font-weight: bold;
   }
 }

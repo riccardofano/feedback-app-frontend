@@ -162,22 +162,8 @@ aside {
     color: var(--clr-white);
   }
 
-  & button {
+  & .btn {
     margin-left: auto;
-    border: none;
-    background-color: var(--clr-purple-400);
-    color: inherit;
-    padding: var(--spacing-2) var(--spacing-4);
-    border-radius: var(--radius);
-    transition-property: background-color;
-    font-size: var(--text-sm);
-    font-weight: bold;
-
-    &:hover,
-    &:focus {
-      opacity: 1;
-      background-color: var(--clr-purple-200);
-    }
   }
 }
 

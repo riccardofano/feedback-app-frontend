@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import { Component } from "solid-js";
 
 import "./NoSuggestions.scss";
@@ -10,7 +11,9 @@ const NoSuggestions: Component = () => {
       <p>Got a suggestion? Found a bug that needs to be squashed?</p>
       <p>We love hearing about new ideas to improve our app.</p>
 
-      <button>+ Add Feedback</button>
+      <A href="/feedback/new" class="btn btn--purple">
+        + Add Feedback
+      </A>
     </div>
   );
 };

@@ -90,7 +90,9 @@ const Home: Component = () => {
               <option value="">Least Comments</option>
             </select>
           </label>
-          <button>+ Add Feedback</button>
+          <A href="/feedback/new" class="btn btn--purple">
+            + Add Feedback
+          </A>
         </header>
         <main class="suggestions">
           <Show
