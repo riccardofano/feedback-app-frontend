@@ -28,7 +28,6 @@ const Home: Component = () => {
 
   const roadmapCount = () =>
     productRequests().reduce((acc, request) => {
-      console.log(acc);
       acc[request.status] = (acc[request.status] ?? 0) + 1;
       return acc;
     }, {});

@@ -1,6 +1,6 @@
 import { A, useParams } from "@solidjs/router";
 import { useNavigate } from "@solidjs/router";
-import { Component, createSignal, For } from "solid-js";
+import { Component, createSignal, For, Show } from "solid-js";
 import Card from "../components/Card";
 import Comment from "../components/Comment";
 
@@ -33,11 +33,13 @@ const Feedback: Component = () => {
       <main class="spacer">
         <Card request={request}></Card>
 
-        <ul class="comment__list">
-          <For each={request.comments}>
-            {(comment) => <Comment comment={comment} />}
-          </For>
-        </ul>
+        <Show when={request.comments.length > 0}>
+          <ul class="comment__list">
+            <For each={request.comments}>
+              {(comment) => <Comment comment={comment} />}
+            </For>
+          </ul>
+        </Show>
 
         <form class="comment-form">
           <h2 class="comment-form__title">Add Comment</h2>
