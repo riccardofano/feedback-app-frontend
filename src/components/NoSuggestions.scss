@@ -1,0 +1,29 @@
+.no-suggestions {
+  display: grid;
+  justify-items: center;
+  background-color: var(--clr-white);
+  color: var(--clr-grey-600);
+  padding: var(--spacing-24) var(--spacing-6);
+  text-align: center;
+
+  & img {
+    margin-bottom: var(--spacing-10);
+  }
+
+  & h2 {
+    color: var(--clr-blue-600);
+    font-weight: bold;
+    margin-bottom: var(--spacing-4);
+  }
+
+  & button {
+    background-color: var(--clr-purple-400);
+    color: var(--clr-white);
+    margin-top: var(--spacing-10);
+    padding: var(--spacing-2) var(--spacing-4);
+    border: none;
+    border-radius: var(--radius);
+    font-size: var(--text-sm);
+    font-weight: bold;
+  }
+}

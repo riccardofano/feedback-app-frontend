@@ -170,6 +170,8 @@ aside {
     padding: var(--spacing-2) var(--spacing-4);
     border-radius: var(--radius);
     transition-property: background-color;
+    font-size: var(--text-sm);
+    font-weight: bold;
 
     &:hover,
     &:focus {

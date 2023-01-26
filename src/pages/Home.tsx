@@ -1,6 +1,7 @@
 import { A } from "@solidjs/router";
-import { Component, createSignal, For } from "solid-js";
+import { Component, createSignal, For, lazy, Show } from "solid-js";
 import Card from "../components/Card";
+const NoSuggestions = lazy(() => import("../components/NoSuggestions"));
 
 import data from "../data.json";
 
@@ -93,9 +94,14 @@ const Home: Component = () => {
           <button>+ Add Feedback</button>
         </header>
         <main class="suggestions">
-          <For each={productRequests()}>
-            {(request) => <Card request={request} />}
-          </For>
+          <Show
+            when={productRequests().length > 0}
+            fallback={<NoSuggestions />}
+          >
+            <For each={productRequests()}>
+              {(request) => <Card request={request} />}
+            </For>
+          </Show>
         </main>
       </div>
     </div>
