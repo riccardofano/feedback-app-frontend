@@ -7,7 +7,7 @@ const Back: Component = () => {
   return (
     <A class="go-back" href="/">
       <img src="/assets/shared/icon-arrow-left.svg" alt="" />
-      Go back
+      Go Back
     </A>
   );
 };
