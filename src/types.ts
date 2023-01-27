@@ -1,13 +1,13 @@
 export interface Comment {
-  id?: number;
+  id: number;
   content: string;
-  replyingTo?: string;
+  replyingTo: string;
   user: {
     image: string;
     name: string;
     username: string;
   };
-  replies?: Array<Comment>;
+  replies: Array<Comment> | null;
 }
 
 export interface Request {
@@ -17,5 +17,5 @@ export interface Request {
   upvotes: number;
   status: string;
   description: string;
-  comments?: Array<Comment>;
+  comments: Array<Comment> | null;
 }

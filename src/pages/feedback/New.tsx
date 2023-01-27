@@ -1,16 +1,35 @@
-import { A } from "@solidjs/router";
-import { Component } from "solid-js";
+import { A, Navigate, useNavigate } from "@solidjs/router";
+import axios from "axios";
+import { Component, JSX } from "solid-js";
 
 import Back from "../../components/Back";
 import Input from "../../components/form/Input";
 import Select from "../../components/form/Select";
 import Textarea from "../../components/form/Textarea";
+import { encodeFormData } from "../../helpers/encodeFormData";
 
 import "./New.scss";
 
 const categories = ["UI", "UX", "Enhancement", "Feature", "Bug"];
 
 const NewFeedback: Component = () => {
+  const navitage = useNavigate();
+
+  const handleSubmit: JSX.EventHandler<
+    HTMLFormElement,
+    Event & { submitter: HTMLElement }
+  > = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        "http://localhost:8000/feedback/new",
+        encodeFormData(e.currentTarget)
+      )
+      .then((res) => navitage(`/feedback/${res.data.id}`))
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div class="container container--skinny">
       <header>
@@ -26,7 +45,7 @@ const NewFeedback: Component = () => {
 
         <h1>Create new Feedback</h1>
 
-        <form class="form">
+        <form class="form" onSubmit={handleSubmit}>
           <Input
             name="title"
             label="Feedback Title"
@@ -41,7 +60,7 @@ const NewFeedback: Component = () => {
           />
 
           <Textarea
-            name="details"
+            name="description"
             label="Feedback Details"
             description="Include any specific comments on what should be improved, added, etc."
           />
