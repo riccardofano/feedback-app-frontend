@@ -97,3 +97,14 @@
     margin-left: var(--spacing-4);
   }
 }
+
+.reply-form {
+  display: flex;
+  align-items: flex-start;
+  grid-column: 2 / span 2;
+  gap: var(--spacing-8);
+
+  & button {
+    flex-shrink: 0;
+  }
+}
