@@ -14,7 +14,7 @@ const NewFeedback: Component = () => {
   return (
     <div class="container container--skinny">
       <header>
-        <Back href="/" />
+        <Back />
       </header>
 
       <main class="form__container">

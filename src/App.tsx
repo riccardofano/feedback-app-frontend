@@ -7,6 +7,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Feedback = lazy(() => import("./pages/Feedback"));
 const NewFeedback = lazy(() => import("./pages/feedback/New"));
 const EditFeedback = lazy(() => import("./pages/feedback/Edit"));
+const Roadmap = lazy(() => import("./pages/Roadmap"));
 
 const App: Component = () => {
   return (
@@ -15,6 +16,7 @@ const App: Component = () => {
       <Route path="/feedback/new" component={NewFeedback}></Route>
       <Route path="/feedback/:id" component={Feedback}></Route>
       <Route path="/feedback/:id/edit" component={EditFeedback}></Route>
+      <Route path="/roadmap" component={Roadmap}></Route>
     </Routes>
   );
 };

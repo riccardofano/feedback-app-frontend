@@ -1,7 +1,8 @@
 import { A } from "@solidjs/router";
 import { Component } from "solid-js";
 
-import { Request, Comment } from "../types";
+import { Request } from "../types";
+import { countComments } from "../helpers/countComments";
 import "./Card.scss";
 
 interface CardProps {
@@ -11,14 +12,25 @@ interface CardProps {
 const Card: Component<CardProps> = (props) => {
   return (
     <A class="suggestion" href={`/feedback/${props.request.id}`}>
-      <button class="suggestion__upvote" onClick={(e) => e.preventDefault()}>
-        <img src="/assets/shared/icon-arrow-up.svg" alt="" />
+      <button
+        class="upvote suggestion__upvote"
+        onClick={(e) => e.preventDefault()}
+      >
+        <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 6l4-4 4 4"
+            stroke="#4661E6"
+            stroke-width="2"
+            fill="none"
+            fill-rule="evenodd"
+          />
+        </svg>
         {props.request.upvotes}
       </button>
       <div class="suggestion__info">
         <h2 class="suggestion__title">{props.request.title}</h2>
         <p class="suggestion__desc">{props.request.description}</p>
-        <p class="suggestion__category">{props.request.category}</p>
+        <p class="pill suggestion__category">{props.request.category}</p>
       </div>
       <p class="suggestion__comments">
         <img src="/assets/shared/icon-comments.svg" alt="" />
@@ -27,20 +39,5 @@ const Card: Component<CardProps> = (props) => {
     </A>
   );
 };
-
-function countComments(comments: Array<Comment>): number {
-  if (!comments) {
-    return 0;
-  }
-  return comments.reduce((acc, comment) => acc + countReplies(comment) + 1, 0);
-}
-
-function countReplies(comment: Comment): number {
-  if (!comment.replies) {
-    return 0;
-  }
-
-  return countComments(comment.replies);
-}
 
 export default Card;
