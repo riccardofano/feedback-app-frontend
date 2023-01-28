@@ -9,6 +9,7 @@ import {
   Show,
 } from "solid-js";
 import Card from "../components/Card";
+import { countComments } from "../helpers/countComments";
 import { Request, User } from "../types";
 const NoSuggestions = lazy(() => import("../components/NoSuggestions"));
 
@@ -29,12 +30,19 @@ const roadmap = {
   "in-progress": { name: "In-Progress", class: "purple" },
   live: { name: "Live", class: "blue" },
 };
+const orderingOptions = {
+  "most-upvoted": "Most upvoted",
+  "least-upvoted": "Least upvoted",
+  "most-comments": "Most comments",
+  "least-comments": "Least comments",
+};
 
 const Home: Component = () => {
   const [data] = createResource(fetcher);
 
   const tags = ["All", "UI", "UX", "Enhancement", "Feature", "Bug"];
   const [currentTag, setCurrentTag] = createSignal("All");
+  const [ordering, setOrdering] = createSignal("most-upvoted");
 
   const productRequests = () => {
     if (currentTag() === "All") {
@@ -43,6 +51,20 @@ const Home: Component = () => {
     return data()?.productRequests.filter(
       (request) => request.category === currentTag().toLowerCase()
     );
+  };
+
+  const orderedRequests = () => {
+    const [order, orderBy] = ordering().split("-");
+    const orderFn = (a: number, b: number) => {
+      return order === "least" ? a - b : b - a;
+    };
+
+    return productRequests()?.sort((a, b) => {
+      if (orderBy === "upvoted") {
+        return orderFn(a.upvotes, b.upvotes);
+      }
+      return orderFn(countComments(a.comments), countComments(b.comments));
+    });
   };
 
   const roadmapCount = () =>
@@ -102,11 +124,13 @@ const Home: Component = () => {
           <p>6 Suggestions</p>
           <label>
             Sort by:
-            <select>
-              <option value="">Most Upvotes</option>
-              <option value="">Least Upvotes</option>
-              <option value="">Most Comments</option>
-              <option value="">Least Comments</option>
+            <select
+              value={ordering()}
+              onChange={(e) => setOrdering(e.currentTarget.value)}
+            >
+              <For each={Object.entries(orderingOptions)}>
+                {([value, display]) => <option value={value}>{display}</option>}
+              </For>
             </select>
           </label>
           <A href="/feedback/new" class="btn btn--purple">
@@ -115,10 +139,10 @@ const Home: Component = () => {
         </header>
         <main class="suggestions">
           <Show
-            when={productRequests()?.length > 0}
+            when={orderedRequests()?.length > 0}
             fallback={<NoSuggestions />}
           >
-            <For each={productRequests()}>
+            <For each={orderedRequests()}>
               {(request) => <Card request={request} />}
             </For>
           </Show>
