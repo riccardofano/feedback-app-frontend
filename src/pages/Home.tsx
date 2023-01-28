@@ -2,7 +2,6 @@ import { A } from "@solidjs/router";
 import axios from "axios";
 import {
   Component,
-  createEffect,
   createResource,
   createSignal,
   For,

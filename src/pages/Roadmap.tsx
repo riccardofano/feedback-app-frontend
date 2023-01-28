@@ -1,15 +1,27 @@
 import { A } from "@solidjs/router";
-import { Component } from "solid-js";
+import axios from "axios";
+import { Component, createResource, Show } from "solid-js";
 import Back from "../components/Back";
 import Stack from "../components/Stack";
+import { Request, User } from "../types";
 
 import "./Roadmap.scss";
 
-import data from "../data.json";
+const fetcher = async (): Promise<{
+  currentUser: User;
+  productRequests: Request[];
+}> => {
+  return axios
+    .get("http://localhost:8000/feedback/all")
+    .then((res) => res.data)
+    .catch(console.error);
+};
 
 const Roadmap: Component = () => {
+  const [data] = createResource(fetcher);
+
   const dividedRequests = () => {
-    return data.productRequests.reduce((acc, req) => {
+    return data()?.productRequests.reduce((acc, req) => {
       acc[req.status] = (acc[req.status] || []).concat([req]);
       return acc;
     }, {});
@@ -28,24 +40,26 @@ const Roadmap: Component = () => {
       </header>
 
       <main class="roadmap__grid">
-        <Stack
-          title="Planned"
-          color="orange"
-          description="Ideas prioritized for research"
-          requests={dividedRequests()["planned"]}
-        />
-        <Stack
-          title="In-progress"
-          color="purple"
-          description="Currently being developed"
-          requests={dividedRequests()["in-progress"]}
-        />
-        <Stack
-          title="Live"
-          color="blue"
-          description="Released features"
-          requests={dividedRequests()["live"]}
-        />
+        <Show when={dividedRequests()} fallback={<div>Loading...</div>}>
+          <Stack
+            title="Planned"
+            color="orange"
+            description="Ideas prioritized for research"
+            requests={dividedRequests()["planned"]}
+          />
+          <Stack
+            title="In-progress"
+            color="purple"
+            description="Currently being developed"
+            requests={dividedRequests()["in-progress"]}
+          />
+          <Stack
+            title="Live"
+            color="blue"
+            description="Released features"
+            requests={dividedRequests()["live"]}
+          />
+        </Show>
       </main>
     </div>
   );
