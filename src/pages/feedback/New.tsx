@@ -33,7 +33,7 @@ const NewFeedback: Component = () => {
   return (
     <div class="container container--skinny">
       <header>
-        <Back />
+        <Back href="/" />
       </header>
 
       <main class="form__container">

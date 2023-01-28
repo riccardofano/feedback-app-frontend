@@ -19,7 +19,7 @@ const Roadmap: Component = () => {
     <div class="container roadmap">
       <header class="roadmap__header">
         <div>
-          <Back class="roadmap__header__back" />
+          <Back href="/" class="roadmap__header__back" />
           <h1 class="roadmap__header__title">Roadmap</h1>
         </div>
         <A class="btn btn--purple" href="/feedback/new">

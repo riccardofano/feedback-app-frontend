@@ -56,7 +56,7 @@ const Feedback: Component = () => {
   return (
     <div class="container spacer">
       <header class="feedback-header">
-        <Back />
+        <Back href="/" />
 
         <A href="./edit" class="btn btn--blue feedback-header__edit">
           Edit Feedback

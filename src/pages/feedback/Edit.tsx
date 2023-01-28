@@ -45,7 +45,7 @@ const EditFeedback: Component = () => {
   return (
     <div class="container container--skinny">
       <header>
-        <Back />
+        <Back href={`/feedback/${id}`} />
       </header>
 
       <main class="form__container">
