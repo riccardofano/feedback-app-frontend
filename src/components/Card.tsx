@@ -1,20 +1,35 @@
 import { A } from "@solidjs/router";
-import { Component } from "solid-js";
+import { Component, createSignal, JSX } from "solid-js";
 
 import { Request } from "../types";
 import { countComments } from "../helpers/countComments";
 import "./Card.scss";
+import axios from "axios";
 
 interface CardProps {
   request: Request;
 }
 
 const Card: Component<CardProps> = (props) => {
+  const [upvoted, setUpvoted] = createSignal(props.request.upvoted);
+
+  const handleUpvote: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (
+    e
+  ) => {
+    e.preventDefault();
+
+    axios
+      .post(`http://localhost:8000/feedback/${props.request.id}/upvote`)
+      .then((res) => setUpvoted(res.data))
+      .catch(console.error);
+  };
+
   return (
     <A class="suggestion" href={`/feedback/${props.request.id}`}>
       <button
         class="upvote suggestion__upvote"
-        onClick={(e) => e.preventDefault()}
+        classList={{ upvoted: upvoted() }}
+        onClick={handleUpvote}
       >
         <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
           <path

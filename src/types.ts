@@ -15,7 +15,14 @@ export interface Request {
   title: string;
   category: string;
   upvotes: number;
+  upvoted: boolean;
   status: string;
   description: string;
   comments: Array<Comment> | null;
+}
+
+export interface User {
+  image: string;
+  name: string;
+  username: string;
 }
