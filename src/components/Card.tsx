@@ -12,6 +12,7 @@ interface CardProps {
 
 const Card: Component<CardProps> = (props) => {
   const [upvoted, setUpvoted] = createSignal(props.request.upvoted);
+  const [upvotes, setUpvotes] = createSignal(props.request.upvotes);
 
   const handleUpvote: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent> = (
     e
@@ -20,7 +21,10 @@ const Card: Component<CardProps> = (props) => {
 
     axios
       .post(`http://localhost:8000/feedback/${props.request.id}/upvote`)
-      .then((res) => setUpvoted(res.data))
+      .then((res) => {
+        setUpvoted(res.data.upvoted);
+        setUpvotes(res.data.upvotes);
+      })
       .catch(console.error);
   };
 
@@ -40,7 +44,7 @@ const Card: Component<CardProps> = (props) => {
             fill-rule="evenodd"
           />
         </svg>
-        {props.request.upvotes}
+        {upvotes()}
       </button>
       <div class="suggestion__info">
         <h2 class="suggestion__title">{props.request.title}</h2>

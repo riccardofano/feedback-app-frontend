@@ -22,7 +22,7 @@ const fetcher = async (): Promise<{
   return axios
     .get("http://localhost:8000/feedback/all")
     .then((res) => res.data)
-    .catch((err) => console.error(err));
+    .catch(console.error);
 };
 
 const roadmap = {
