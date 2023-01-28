@@ -1,11 +1,29 @@
 import { A } from "@solidjs/router";
-import { Component, createSignal, For, lazy, Show } from "solid-js";
+import axios from "axios";
+import {
+  Component,
+  createEffect,
+  createResource,
+  createSignal,
+  For,
+  lazy,
+  Show,
+} from "solid-js";
 import Card from "../components/Card";
+import { Request, User } from "../types";
 const NoSuggestions = lazy(() => import("../components/NoSuggestions"));
 
-import data from "../data.json";
-
 import "./Home.scss";
+
+const fetcher = async (): Promise<{
+  currentUser: User;
+  productRequests: Request[];
+}> => {
+  return axios
+    .get("http://localhost:8000/feedback/all")
+    .then((res) => res.data)
+    .catch((err) => console.error(err));
+};
 
 const roadmap = {
   planned: { name: "Planned", class: "orange" },
@@ -14,20 +32,22 @@ const roadmap = {
 };
 
 const Home: Component = () => {
+  const [data] = createResource(fetcher);
+
   const tags = ["All", "UI", "UX", "Enhancement", "Feature", "Bug"];
   const [currentTag, setCurrentTag] = createSignal("All");
 
   const productRequests = () => {
     if (currentTag() === "All") {
-      return data.productRequests;
+      return data()?.productRequests;
     }
-    return data.productRequests.filter(
+    return data()?.productRequests.filter(
       (request) => request.category === currentTag().toLowerCase()
     );
   };
 
   const roadmapCount = () =>
-    productRequests().reduce((acc, request) => {
+    productRequests()?.reduce((acc, request) => {
       acc[request.status] = (acc[request.status] ?? 0) + 1;
       return acc;
     }, {});
@@ -68,7 +88,7 @@ const Home: Component = () => {
                     <span class={`milestone__color ${m.class}`} />
                     <p class="milestone__text">{m.name}</p>
                     <span class="milestone__count">
-                      {roadmapCount()[milestone] || 0}
+                      {roadmapCount()?.[milestone] || 0}
                     </span>
                   </li>
                 );
@@ -96,7 +116,7 @@ const Home: Component = () => {
         </header>
         <main class="suggestions">
           <Show
-            when={productRequests().length > 0}
+            when={productRequests()?.length > 0}
             fallback={<NoSuggestions />}
           >
             <For each={productRequests()}>
