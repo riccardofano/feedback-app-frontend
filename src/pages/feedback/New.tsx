@@ -26,7 +26,7 @@ const NewFeedback: Component = () => {
         "http://localhost:8000/feedback/new",
         encodeFormData(e.currentTarget)
       )
-      .then((res) => navitage(`/feedback/${res.data.id}`))
+      .then((res) => navitage(`/feedback/${res.data.id}`, { replace: true }))
       .catch((err) => console.error(err));
   };
 
