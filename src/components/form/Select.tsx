@@ -32,7 +32,14 @@ const Select: Component<SelectProps> = (props) => {
         }}
       >
         <For each={props.options}>
-          {(option) => <option value={option.toLowerCase()}>{option}</option>}
+          {(option) => (
+            <option
+              value={option.toLowerCase()}
+              selected={option.toLowerCase() === props.value}
+            >
+              {option}
+            </option>
+          )}
         </For>
       </select>
     </Generic>
