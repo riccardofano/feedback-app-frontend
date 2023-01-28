@@ -1,4 +1,6 @@
-import { Component, createSignal, For, Show } from "solid-js";
+import axios from "axios";
+import { batch, Component, createSignal, For, Show } from "solid-js";
+import { encodeFormData } from "../helpers/encodeFormData";
 import { Comment as CommentType } from "../types";
 
 import "./Comment.scss";
@@ -11,6 +13,26 @@ interface CommentProps {
 
 const Comment: Component<CommentProps> = (props) => {
   const [isReplying, setIsReplying] = createSignal(false);
+  const [reply, setReply] = createSignal("");
+  const [replies, setReplies] = createSignal(props.comment.replies);
+
+  const handleReplySubmit = (e: any) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        `http://localhost:8000/comments/${props.comment.id}/reply`,
+        encodeFormData(e.currentTarget)
+      )
+      .then((res) => {
+        batch(() => {
+          setReplies((replies) => [...replies, res.data]);
+          setIsReplying(false);
+          setReply("");
+        });
+      })
+      .catch(console.error);
+  };
 
   return (
     <li class="comment" classList={{ [props?.class]: props.class?.length > 0 }}>
@@ -37,11 +59,20 @@ const Comment: Component<CommentProps> = (props) => {
           {props.comment.content}
         </p>
         <Show when={isReplying()}>
-          <form class="reply-form">
+          <form class="reply-form" onSubmit={handleReplySubmit}>
+            {/* TODO: don't hardcode username */}
+            <input type="hidden" name="username" value="velvetround" />
+            <input
+              type="hidden"
+              name="to"
+              value={props.comment.user.username}
+            />
             <textarea
               class="form__textarea"
-              name="reply"
+              name="content"
               placeholder="Type your reply here"
+              value={reply()}
+              onInput={(e) => setReply(e.currentTarget.value)}
             />
             <button class="btn btn--purple" type="submit">
               Post reply
@@ -50,11 +81,11 @@ const Comment: Component<CommentProps> = (props) => {
         </Show>
       </div>
 
-      <Show when={props.comment.replies.length > 0}>
+      <Show when={replies().length > 0}>
         <div class="comment__line" />
 
         <ul class="replies">
-          <For each={props.comment.replies}>
+          <For each={replies()}>
             {(reply) => <Comment class="reply" comment={reply} />}
           </For>
         </ul>
