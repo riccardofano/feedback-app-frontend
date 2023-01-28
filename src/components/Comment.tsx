@@ -50,7 +50,7 @@ const Comment: Component<CommentProps> = (props) => {
         </Show>
       </div>
 
-      <Show when={props.comment.replies}>
+      <Show when={props.comment.replies.length > 0}>
         <div class="comment__line" />
 
         <ul class="replies">
