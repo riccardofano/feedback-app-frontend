@@ -17,6 +17,7 @@ import "./Feedback.scss";
 import Back from "../components/Back";
 import axios from "axios";
 import { Request } from "../types";
+import { encodeFormData } from "../helpers/encodeFormData";
 
 const fetcher = async (id: number): Promise<Request> => {
   return axios
@@ -32,14 +33,25 @@ const Feedback: Component = () => {
     navigate("/", { replace: true });
   }
 
-  const [request] = createResource(+id, fetcher);
+  const [request, { mutate }] = createResource(+id, fetcher);
 
   const [comment, setComment] = createSignal("");
   const leftInComment = () => 250 - comment().length;
 
-  createEffect(() => {
-    console.log(request());
-  });
+  const handleNewComment = (e: any) => {
+    e.preventDefault();
+
+    axios
+      .post(
+        `http://localhost:8000/feedback/${id}/comment`,
+        encodeFormData(e.currentTarget)
+      )
+      .then((res) => {
+        mutate((prev) => ({ ...prev, comments: [...prev.comments, res.data] }));
+        setComment("");
+      })
+      .catch(console.error);
+  };
 
   return (
     <div class="container spacer">
@@ -55,7 +67,7 @@ const Feedback: Component = () => {
         <Show when={request()} fallback={<p>Loading...</p>}>
           <Card request={request()}></Card>
 
-          <Show when={request().comments}>
+          <Show when={request().comments.length > 0}>
             <ul class="comment__list">
               <For each={request().comments}>
                 {(comment) => <Comment comment={comment} />}
@@ -63,10 +75,13 @@ const Feedback: Component = () => {
             </ul>
           </Show>
 
-          <form class="comment-form">
+          <form class="comment-form" onSubmit={handleNewComment}>
             <h2 class="comment-form__title">Add Comment</h2>
+            {/* TODO: don't hardcode username */}
+            <input type="hidden" name="username" value="velvetround" />
             <textarea
               class="comment-form__input"
+              name="content"
               cols="30"
               rows="2"
               placeholder="Type your comment here"
@@ -78,7 +93,7 @@ const Feedback: Component = () => {
                 {leftInComment()} Character{leftInComment() === 1 ? "" : "s"}{" "}
                 left
               </p>
-              <button class="comment-form__submit" type="submit">
+              <button class="btn btn--huge btn--purple" type="submit">
                 Post Comment
               </button>
             </div>
