@@ -66,6 +66,8 @@ const EditFeedback: Component = () => {
                   label="Feedback Title"
                   description="Add a short, descriptive headline"
                   value={request().title}
+                  placeholder="You must insert the title"
+                  required
                 />
 
                 <Select
@@ -74,6 +76,7 @@ const EditFeedback: Component = () => {
                   description="Choose a category for your feedback"
                   options={categories}
                   value={request().category}
+                  required
                 />
 
                 <Select
@@ -82,6 +85,7 @@ const EditFeedback: Component = () => {
                   description="Change feedback state"
                   options={statuses}
                   value={request().status}
+                  required
                 />
 
                 <Textarea
@@ -89,6 +93,8 @@ const EditFeedback: Component = () => {
                   label="Feedback Details"
                   description="Include any specific comments on what should be improved, added, etc."
                   value={request().description}
+                  placeholder="You must insert the description"
+                  required
                 />
 
                 <div class="form__footer">

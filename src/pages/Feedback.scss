@@ -59,6 +59,10 @@
     font-size: var(--text-sm);
   }
 
+  &--danger {
+    color: var(--clr-red-400);
+  }
+
   &__submit {
     padding: var(--spacing-4) var(--spacing-8);
     font-weight: bold;

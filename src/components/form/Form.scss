@@ -29,8 +29,8 @@
   &__select,
   &__textarea {
     display: block;
-    border: 1px solid var(--clr-grey-200);
     border-radius: var(--radius);
+    border: none;
     padding: var(--spacing-3) var(--spacing-4);
     background-color: var(--clr-grey-200);
     color: var(--clr-grey-600);
@@ -38,6 +38,11 @@
 
     @include for-desktop {
       padding: var(--spacing-3) var(--spacing-6);
+    }
+
+    &:invalid {
+      outline: 2px solid currentColor;
+      color: var(--clr-red-400);
     }
   }
 

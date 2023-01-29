@@ -82,8 +82,17 @@ const Feedback: Component = () => {
               />
               <div class="comment-form__footer">
                 <p class="comment-form__c-count">
-                  {leftInComment()} Character{leftInComment() === 1 ? "" : "s"}{" "}
-                  left
+                  <Show
+                    when={leftInComment() > 0}
+                    fallback={
+                      <span class="comment-form--danger">
+                        Too many characters!
+                      </span>
+                    }
+                  >
+                    {leftInComment()} Character
+                    {leftInComment() === 1 ? "" : "s"} left
+                  </Show>
                 </p>
                 <button class="btn btn--huge btn--purple" type="submit">
                   Post Comment

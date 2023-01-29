@@ -48,6 +48,9 @@ const NewFeedback: Component = () => {
               name="title"
               label="Feedback Title"
               description="Add a short, descriptive headline"
+              placeholder="You must insert a title"
+              value="My awesome feedback"
+              required
             />
 
             <Select
@@ -55,12 +58,16 @@ const NewFeedback: Component = () => {
               label="Category"
               description="Choose a category for your feedback"
               options={categories}
+              required
             />
 
             <Textarea
               name="description"
               label="Feedback Details"
               description="Include any specific comments on what should be improved, added, etc."
+              placeholder="You must insert a description"
+              value="My great feedback details"
+              required
             />
 
             <div class="form__footer grid-end">
