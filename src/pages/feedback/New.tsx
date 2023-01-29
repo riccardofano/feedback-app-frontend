@@ -32,49 +32,51 @@ const NewFeedback: Component = () => {
 
   return (
     <div class="container container--skinny">
-      <header>
-        <Back href="/" />
-      </header>
+      <div class="container--inner">
+        <header>
+          <Back href="/" />
+        </header>
 
-      <main class="form__container">
-        <img
-          class="floating-icon"
-          src="/assets/shared/icon-new-feedback.svg"
-          alt=""
-        />
-
-        <h1>Create new Feedback</h1>
-
-        <form class="form" onSubmit={handleSubmit}>
-          <Input
-            name="title"
-            label="Feedback Title"
-            description="Add a short, descriptive headline"
+        <main class="form__container">
+          <img
+            class="floating-icon"
+            src="/assets/shared/icon-new-feedback.svg"
+            alt=""
           />
 
-          <Select
-            name="category"
-            label="Category"
-            description="Choose a category for your feedback"
-            options={categories}
-          />
+          <h1 class="form-heading">Create new Feedback</h1>
 
-          <Textarea
-            name="description"
-            label="Feedback Details"
-            description="Include any specific comments on what should be improved, added, etc."
-          />
+          <form class="form" onSubmit={handleSubmit}>
+            <Input
+              name="title"
+              label="Feedback Title"
+              description="Add a short, descriptive headline"
+            />
 
-          <div class="form__footer grid-end">
-            <A class="btn btn--dark-blue" href="/">
-              Cancel
-            </A>
-            <button class="btn btn--purple" type="submit">
-              Add feedback
-            </button>
-          </div>
-        </form>
-      </main>
+            <Select
+              name="category"
+              label="Category"
+              description="Choose a category for your feedback"
+              options={categories}
+            />
+
+            <Textarea
+              name="description"
+              label="Feedback Details"
+              description="Include any specific comments on what should be improved, added, etc."
+            />
+
+            <div class="form__footer grid-end">
+              <A class="btn btn--dark-blue" href="/">
+                Cancel
+              </A>
+              <button class="btn btn--purple" type="submit">
+                Add feedback
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
     </div>
   );
 };

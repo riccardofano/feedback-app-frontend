@@ -58,7 +58,7 @@ const EditFeedback: Component = () => {
                 alt=""
               />
 
-              <h1>Edit &lsquo;{request().title}&rsquo;</h1>
+              <h1 class="form-heading">Edit &lsquo;{request().title}&rsquo;</h1>
 
               <form class="form" onSubmit={handleSubmit}>
                 <Input
