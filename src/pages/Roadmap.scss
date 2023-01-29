@@ -1,3 +1,5 @@
+@use "/src/mixins" as *;
+
 .roadmap {
   &__header {
     display: flex;
@@ -5,10 +7,9 @@
     justify-content: space-between;
     padding: var(--spacing-6);
     background-color: var(--clr-blue-600);
-    border-radius: var(--radius);
 
     &__title {
-      font-size: var(--text-2xl);
+      font-size: var(--text-lg);
       color: var(--clr-white);
     }
 
@@ -22,11 +23,25 @@
     }
   }
 
+  @include for-desktop {
+    &__header {
+      border-radius: var(--radius);
+    }
+
+    &__title {
+      font-size: var(--text-2xl);
+    }
+  }
+
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 325px));
     justify-content: space-between;
-    gap: 1rem;
-    margin-top: var(--spacing-10);
+    padding: var(--spacing-6);
+    gap: var(--spacing-6);
+
+    @include for-desktop {
+      margin-top: var(--spacing-10);
+      grid-template-columns: repeat(3, minmax(200px, 325px));
+    }
   }
 }

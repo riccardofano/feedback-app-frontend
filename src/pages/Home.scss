@@ -12,12 +12,23 @@
 .suggestions__banner {
   display: flex;
   align-items: center;
-  padding: var(--spacing-4);
-  border-radius: var(--radius);
+  justify-content: flex-start;
+  padding: var(--spacing-4) var(--spacing-6);
   margin-bottom: var(--spacing-6);
 
   background-color: var(--clr-blue-600);
   color: var(--clr-white);
+
+  @include for-desktop {
+    border-radius: var(--radius);
+  }
+
+  @include for-mobile {
+    & img,
+    & p {
+      display: none;
+    }
+  }
 
   & img {
     margin-right: var(--spacing-4);
@@ -29,13 +40,15 @@
   }
 
   & label {
-    color: var(--clr-grey-600);
+    color: var(--clr-grey-200);
+    font-size: var(--text-sm);
   }
 
   & select {
     border: none;
     background-color: transparent;
     color: var(--clr-white);
+    font-weight: bold;
   }
 
   & .btn {

@@ -20,6 +20,10 @@ const fetcher = async (): Promise<{
 const Roadmap: Component = () => {
   const [data] = createResource(fetcher);
 
+  // HACK: reset html overflow when you click 'view'
+  // from the mobile homepage and the sidebar is open
+  document.documentElement.style.overflow = "";
+
   const dividedRequests = () => {
     return data()?.productRequests.reduce((acc, req) => {
       acc[req.status] = (acc[req.status] || []).concat([req]);

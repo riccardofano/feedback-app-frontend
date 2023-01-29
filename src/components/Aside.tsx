@@ -16,7 +16,7 @@ const Aside: Component<AsideProps> = (props) => {
 
   const toggleSidebar = () => {
     setOpen(!open());
-    document.documentElement.style.overflow = open() ? "hidden" : "auto";
+    document.documentElement.style.overflow = open() ? "hidden" : "";
   };
 
   return (
