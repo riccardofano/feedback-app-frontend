@@ -1,7 +1,8 @@
 import { Route, Routes } from "@solidjs/router";
 import { Component, lazy } from "solid-js";
+
+import "./global.scss";
 import "./App.scss";
-import "./Common.scss";
 
 const Home = lazy(() => import("./pages/Home"));
 const Feedback = lazy(() => import("./pages/Feedback"));

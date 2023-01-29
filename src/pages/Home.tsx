@@ -8,9 +8,11 @@ import {
   lazy,
   Show,
 } from "solid-js";
-import Card from "../components/Card";
 import { countComments } from "../helpers/countComments";
 import { Request, User } from "../types";
+
+import Aside from "../components/Aside";
+import Card from "../components/Card";
 const NoSuggestions = lazy(() => import("../components/NoSuggestions"));
 
 import "./Home.scss";
@@ -75,49 +77,13 @@ const Home: Component = () => {
 
   return (
     <div class="grid container">
-      <aside>
-        <header class="header">
-          <h1 class="header__title">Frontend Mentor</h1>
-          <p class="header__desc">Feedback Board</p>
-        </header>
-        <section class="tags">
-          <For each={tags}>
-            {(tag) => (
-              <button
-                class="tag"
-                classList={{ active: tag === currentTag() }}
-                onClick={() => setCurrentTag(tag)}
-              >
-                {tag}
-              </button>
-            )}
-          </For>
-        </section>
-        <section class="milestones">
-          <div class="milestones__header">
-            <p class="milestones__header__title">Roadmap</p>
-            <A class="milestones__header__link" href="/roadmap">
-              View
-            </A>
-          </div>
-          <ul class="milestones__list">
-            <For each={Object.keys(roadmap)}>
-              {(milestone) => {
-                const m = roadmap[milestone];
-                return (
-                  <li class="milestone">
-                    <span class={`milestone__color ${m.class}`} />
-                    <p class="milestone__text">{m.name}</p>
-                    <span class="milestone__count">
-                      {roadmapCount()?.[milestone] || 0}
-                    </span>
-                  </li>
-                );
-              }}
-            </For>
-          </ul>
-        </section>
-      </aside>
+      <Aside
+        currentTag={currentTag()}
+        tags={tags}
+        handleTagChange={(tag: string) => setCurrentTag(tag)}
+        roadmap={roadmap}
+        roadmapCount={roadmapCount()}
+      />
       <div>
         <header class="suggestions__banner">
           <img src="/assets/suggestions/icon-suggestions.svg" alt="" />

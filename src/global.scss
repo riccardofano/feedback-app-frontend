@@ -1,8 +1,12 @@
+@use "/src/mixins" as *;
+
 .container {
-  max-width: 70rem;
-  padding-left: var(--spacing-4);
-  padding-right: var(--spacing-4);
-  margin: var(--spacing-24) auto;
+  @include for-desktop {
+    max-width: 70rem;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+    margin: var(--spacing-24) auto;
+  }
 
   &--skinny {
     max-width: 35rem;
