@@ -4,7 +4,7 @@ import { Component, createSignal, JSX, mergeProps, Show } from "solid-js";
 import { Request } from "../types";
 import { countComments } from "../helpers/countComments";
 import "./Card.scss";
-import axios from "axios";
+import { axios } from "../api_config";
 
 type onClickEvent = JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>;
 
@@ -22,7 +22,7 @@ const Card: Component<CardProps> = (props) => {
     e.preventDefault();
 
     axios
-      .post(`http://localhost:8000/feedback/${props.request.id}/upvote`)
+      .post(`/feedback/${props.request.id}/upvote`)
       .then((res) => {
         setUpvoted(res.data.upvoted);
         setUpvotes(res.data.upvotes);

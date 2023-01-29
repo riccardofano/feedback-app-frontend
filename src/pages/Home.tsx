@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import axios from "axios";
+import { axios } from "../api_config";
 import {
   Component,
   createResource,
@@ -22,7 +22,7 @@ const fetcher = async (): Promise<{
   productRequests: Request[];
 }> => {
   return axios
-    .get("http://localhost:8000/feedback/all")
+    .get("/feedback/all")
     .then((res) => res.data)
     .catch(console.error);
 };

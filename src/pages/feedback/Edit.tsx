@@ -8,7 +8,7 @@ import Textarea from "../../components/form/Textarea";
 
 import "./Edit.scss";
 
-import axios from "axios";
+import { axios } from "../../api_config";
 import { Request } from "../../types";
 import { encodeFormData } from "../../helpers/encodeFormData";
 
@@ -17,7 +17,7 @@ const statuses = ["Suggestion", "Planned", "In-Progress", "Live"];
 
 const fetcher = async (id: string): Promise<Request> => {
   return axios
-    .get(`http://localhost:8000/feedback/${id}`)
+    .get(`/feedback/${id}`)
     .then((res) => res.data)
     .catch(console.error);
 };

@@ -1,5 +1,5 @@
-import { A, Navigate, useNavigate } from "@solidjs/router";
-import axios from "axios";
+import { A, useNavigate } from "@solidjs/router";
+import { axios } from "../../api_config";
 import { Component, JSX } from "solid-js";
 
 import Back from "../../components/Back";
@@ -22,10 +22,7 @@ const NewFeedback: Component = () => {
     e.preventDefault();
 
     axios
-      .post(
-        "http://localhost:8000/feedback/new",
-        encodeFormData(e.currentTarget)
-      )
+      .post("/feedback/new", encodeFormData(e.currentTarget))
       .then((res) => navitage(`/feedback/${res.data.id}`, { replace: true }))
       .catch((err) => console.error(err));
   };

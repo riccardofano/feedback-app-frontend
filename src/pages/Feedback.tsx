@@ -1,27 +1,18 @@
-import { A, useParams } from "@solidjs/router";
-import { useNavigate } from "@solidjs/router";
-import {
-  Component,
-  createEffect,
-  createResource,
-  createSignal,
-  For,
-  Show,
-  Suspense,
-} from "solid-js";
+import { A, useNavigate, useParams } from "@solidjs/router";
+import { Component, createResource, createSignal, For, Show } from "solid-js";
 import Card from "../components/Card";
 import Comment from "../components/Comment";
 
 import "./Feedback.scss";
 
+import { axios } from "../api_config";
 import Back from "../components/Back";
-import axios from "axios";
-import { Request } from "../types";
 import { encodeFormData } from "../helpers/encodeFormData";
+import { Request } from "../types";
 
 const fetcher = async (id: number): Promise<Request> => {
   return axios
-    .get(`http://localhost:8000/feedback/${id}`)
+    .get(`/feedback/${id}`)
     .then((res) => res.data)
     .catch((err) => console.error(err));
 };

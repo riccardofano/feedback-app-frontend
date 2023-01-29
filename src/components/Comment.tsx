@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axios } from "../api_config";
 import { batch, Component, createSignal, For, Show } from "solid-js";
 import { encodeFormData } from "../helpers/encodeFormData";
 import { Comment as CommentType } from "../types";
@@ -21,7 +21,7 @@ const Comment: Component<CommentProps> = (props) => {
 
     axios
       .post(
-        `http://localhost:8000/comments/${props.comment.id}/reply`,
+        `/comments/${props.comment.id}/reply`,
         encodeFormData(e.currentTarget)
       )
       .then((res) => {
