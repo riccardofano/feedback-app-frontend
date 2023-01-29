@@ -57,6 +57,12 @@
 }
 
 .suggestions {
+  margin-inline: var(--spacing-6);
+
+  @include for-desktop {
+    margin-inline: 0;
+  }
+
   & > * + * {
     margin-top: var(--spacing-6);
   }

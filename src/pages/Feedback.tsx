@@ -54,52 +54,54 @@ const Feedback: Component = () => {
   };
 
   return (
-    <div class="container spacer">
-      <header class="feedback-header">
-        <Back href="/" />
+    <div class="container">
+      <div class="container--inner spacer">
+        <header class="feedback-header">
+          <Back href="/" />
 
-        <A href="./edit" class="btn btn--blue feedback-header__edit">
-          Edit Feedback
-        </A>
-      </header>
+          <A href="./edit" class="btn btn--blue btn--huge">
+            Edit Feedback
+          </A>
+        </header>
 
-      <main class="spacer">
-        <Show when={request()} fallback={<p>Loading...</p>}>
-          <Card request={request()}></Card>
+        <main class="spacer">
+          <Show when={request()} fallback={<p>Loading...</p>}>
+            <Card request={request()}></Card>
 
-          <Show when={request().comments.length > 0}>
-            <ul class="comment__list">
-              <For each={request().comments}>
-                {(comment) => <Comment comment={comment} />}
-              </For>
-            </ul>
+            <Show when={request().comments.length > 0}>
+              <ul class="comment__list">
+                <For each={request().comments}>
+                  {(comment) => <Comment comment={comment} />}
+                </For>
+              </ul>
+            </Show>
+
+            <form class="comment-form" onSubmit={handleNewComment}>
+              <h2 class="comment-form__title">Add Comment</h2>
+              {/* TODO: don't hardcode username */}
+              <input type="hidden" name="username" value="velvetround" />
+              <textarea
+                class="comment-form__input"
+                name="content"
+                cols="30"
+                rows="2"
+                placeholder="Type your comment here"
+                value={comment()}
+                onInput={(e) => setComment(e.currentTarget.value)}
+              />
+              <div class="comment-form__footer">
+                <p class="comment-form__c-count">
+                  {leftInComment()} Character{leftInComment() === 1 ? "" : "s"}{" "}
+                  left
+                </p>
+                <button class="btn btn--huge btn--purple" type="submit">
+                  Post Comment
+                </button>
+              </div>
+            </form>
           </Show>
-
-          <form class="comment-form" onSubmit={handleNewComment}>
-            <h2 class="comment-form__title">Add Comment</h2>
-            {/* TODO: don't hardcode username */}
-            <input type="hidden" name="username" value="velvetround" />
-            <textarea
-              class="comment-form__input"
-              name="content"
-              cols="30"
-              rows="2"
-              placeholder="Type your comment here"
-              value={comment()}
-              onInput={(e) => setComment(e.currentTarget.value)}
-            />
-            <div class="comment-form__footer">
-              <p class="comment-form__c-count">
-                {leftInComment()} Character{leftInComment() === 1 ? "" : "s"}{" "}
-                left
-              </p>
-              <button class="btn btn--huge btn--purple" type="submit">
-                Post Comment
-              </button>
-            </div>
-          </form>
-        </Show>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };

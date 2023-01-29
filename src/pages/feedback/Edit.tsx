@@ -44,67 +44,69 @@ const EditFeedback: Component = () => {
 
   return (
     <div class="container container--skinny">
-      <header>
-        <Back href={`/feedback/${id}`} />
-      </header>
+      <div class="container--inner">
+        <header>
+          <Back href={`/feedback/${id}`} />
+        </header>
 
-      <main class="form__container">
-        <Show when={request()} fallback={<div>Loading...</div>}>
-          <>
-            <img
-              class="floating-icon"
-              src="/assets/shared/icon-edit-feedback.svg"
-              alt=""
-            />
-
-            <h1>Edit &lsquo;{request().title}&rsquo;</h1>
-
-            <form class="form" onSubmit={handleSubmit}>
-              <Input
-                name="title"
-                label="Feedback Title"
-                description="Add a short, descriptive headline"
-                value={request().title}
+        <main class="form__container">
+          <Show when={request()} fallback={<div>Loading...</div>}>
+            <>
+              <img
+                class="floating-icon"
+                src="/assets/shared/icon-edit-feedback.svg"
+                alt=""
               />
 
-              <Select
-                name="category"
-                label="Category"
-                description="Choose a category for your feedback"
-                options={categories}
-                value={request().category}
-              />
+              <h1>Edit &lsquo;{request().title}&rsquo;</h1>
 
-              <Select
-                name="status"
-                label="Update Status"
-                description="Change feedback state"
-                options={statuses}
-                value={request().status}
-              />
+              <form class="form" onSubmit={handleSubmit}>
+                <Input
+                  name="title"
+                  label="Feedback Title"
+                  description="Add a short, descriptive headline"
+                  value={request().title}
+                />
 
-              <Textarea
-                name="description"
-                label="Feedback Details"
-                description="Include any specific comments on what should be improved, added, etc."
-                value={request().description}
-              />
+                <Select
+                  name="category"
+                  label="Category"
+                  description="Choose a category for your feedback"
+                  options={categories}
+                  value={request().category}
+                />
 
-              <div class="form__footer">
-                <button class="form__delete-btn btn btn--red" type="button">
-                  Delete
-                </button>
-                <A class="btn btn--dark-blue" href="/">
-                  Cancel
-                </A>
-                <button class="btn btn--purple" type="submit">
-                  Edit feedback
-                </button>
-              </div>
-            </form>
-          </>
-        </Show>
-      </main>
+                <Select
+                  name="status"
+                  label="Update Status"
+                  description="Change feedback state"
+                  options={statuses}
+                  value={request().status}
+                />
+
+                <Textarea
+                  name="description"
+                  label="Feedback Details"
+                  description="Include any specific comments on what should be improved, added, etc."
+                  value={request().description}
+                />
+
+                <div class="form__footer">
+                  <button class="form__delete-btn btn btn--red" type="button">
+                    Delete
+                  </button>
+                  <A class="btn btn--dark-blue" href="/">
+                    Cancel
+                  </A>
+                  <button class="btn btn--purple" type="submit">
+                    Edit feedback
+                  </button>
+                </div>
+              </form>
+            </>
+          </Show>
+        </main>
+      </div>
     </div>
   );
 };
