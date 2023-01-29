@@ -35,11 +35,11 @@
 
   &__grid {
     display: grid;
-    justify-content: space-between;
     padding: var(--spacing-6);
     gap: var(--spacing-6);
 
     @include for-desktop {
+      justify-content: space-between;
       margin-top: var(--spacing-10);
       grid-template-columns: repeat(3, minmax(200px, 325px));
     }
