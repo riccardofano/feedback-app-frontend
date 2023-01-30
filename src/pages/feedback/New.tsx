@@ -8,8 +8,6 @@ import Select from "../../components/form/Select";
 import Textarea from "../../components/form/Textarea";
 import { encodeFormData } from "../../helpers/encodeFormData";
 
-import "./New.scss";
-
 const categories = ["UI", "UX", "Enhancement", "Feature", "Bug"];
 
 const NewFeedback: Component = () => {

@@ -6,8 +6,6 @@ import Input from "../../components/form/Input";
 import Select from "../../components/form/Select";
 import Textarea from "../../components/form/Textarea";
 
-import "./Edit.scss";
-
 import { axios } from "../../api_config";
 import { Request } from "../../types";
 import { encodeFormData } from "../../helpers/encodeFormData";
