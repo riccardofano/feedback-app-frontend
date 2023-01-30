@@ -87,7 +87,7 @@ const Home: Component = () => {
       <div>
         <header class="suggestions__banner">
           <img src="/assets/suggestions/icon-suggestions.svg" alt="" />
-          <p>6 Suggestions</p>
+          <p>{roadmapCount()?.["suggestion"] || 0} Suggestions</p>
           <label>
             Sort by:
             <select
