@@ -32,10 +32,7 @@ const EditFeedback: Component = () => {
     e.preventDefault();
 
     axios
-      .patch(
-        `http://localhost:8000/feedback/${id}/edit`,
-        encodeFormData(e.currentTarget)
-      )
+      .patch(`/feedback/${id}/edit`, encodeFormData(e.currentTarget))
       .then((res) => navitage(`/feedback/${res.data.id}`, { replace: true }))
       .catch((err) => console.error(err));
   };
