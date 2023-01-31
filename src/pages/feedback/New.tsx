@@ -35,6 +35,7 @@ const NewFeedback: Component = () => {
         <main class="form__container">
           <img
             class="floating-icon"
+            style={{ width: "56px", height: "56px" }}
             src="/assets/shared/icon-new-feedback.svg"
             alt=""
           />

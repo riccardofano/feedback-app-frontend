@@ -32,12 +32,14 @@ const Aside: Component<AsideProps> = (props) => {
             when={open()}
             fallback={
               <img
+                style={{ width: "20px", height: "17px" }}
                 src="/assets/shared/mobile/icon-hamburger.svg"
                 alt="Open menu bar"
               />
             }
           >
             <img
+              style={{ width: "18px", height: "17px" }}
               src="/assets/shared/mobile/icon-close.svg"
               alt="Close menu bar"
             />

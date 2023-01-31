@@ -52,6 +52,7 @@ const EditFeedback: Component = () => {
             <>
               <img
                 class="floating-icon"
+                style={{ width: "56px", height: "56px" }}
                 src="/assets/shared/icon-edit-feedback.svg"
                 alt=""
               />

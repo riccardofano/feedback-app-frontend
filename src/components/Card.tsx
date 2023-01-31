@@ -62,7 +62,11 @@ const Card: Component<CardProps> = (props) => {
       <div class="suggestion__footer">
         <div class="suggestion__end-btn">{upvoteButton()}</div>
         <p class="suggestion__comments">
-          <img src="/assets/shared/icon-comments.svg" alt="" />
+          <img
+            style={{ width: "18px", height: "16px" }}
+            src="/assets/shared/icon-comments.svg"
+            alt=""
+          />
           <span>{countComments(props.request.comments)}</span>
         </p>
       </div>
