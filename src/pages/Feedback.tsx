@@ -33,10 +33,7 @@ const Feedback: Component = () => {
     e.preventDefault();
 
     axios
-      .post(
-        `http://localhost:8000/feedback/${id}/comment`,
-        encodeFormData(e.currentTarget)
-      )
+      .post(`/feedback/${id}/comment`, encodeFormData(e.currentTarget))
       .then((res) => {
         mutate((prev) => ({ ...prev, comments: [...prev.comments, res.data] }));
         setComment("");
