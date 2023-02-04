@@ -1,11 +1,7 @@
-import { Component, For, JSX, splitProps } from "solid-js";
-import Generic from "./Generic";
+import { Component, JSX, splitProps } from "solid-js";
+import Generic, { GenericProps } from "./Generic";
 
-interface Textarea extends JSX.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  name: string;
-  description: string;
-  label: string;
-}
+type Textarea = JSX.TextareaHTMLAttributes<HTMLTextAreaElement> & GenericProps;
 
 const Select: Component<Textarea> = (props) => {
   const [, rest] = splitProps(props, ["name", "description", "label"]);
@@ -15,6 +11,7 @@ const Select: Component<Textarea> = (props) => {
       name={props.name}
       description={props.description}
       label={props.label}
+      error={props.error}
     >
       <textarea
         {...rest}
@@ -24,7 +21,7 @@ const Select: Component<Textarea> = (props) => {
           ...(props.class && { [props.class]: true }),
           ...rest.classList,
         }}
-      ></textarea>
+      />
     </Generic>
   );
 };

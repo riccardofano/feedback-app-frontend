@@ -9,6 +9,7 @@ import { axios } from "../api_config";
 import Back from "../components/Back";
 import { encodeFormData } from "../helpers/encodeFormData";
 import { Request } from "../types";
+import { createStore } from "solid-js/store";
 
 const fetcher = async (id: number): Promise<Request> => {
   return axios
@@ -25,6 +26,7 @@ const Feedback: Component = () => {
   }
 
   const [request, { mutate }] = createResource(+id, fetcher);
+  const [errors, setErrors] = createStore<{ [key: string]: string }>();
 
   const [comment, setComment] = createSignal("");
   const leftInComment = () => 250 - comment().length;
@@ -38,7 +40,13 @@ const Feedback: Component = () => {
         mutate((prev) => ({ ...prev, comments: [...prev.comments, res.data] }));
         setComment("");
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          setErrors(err.response.data);
+        } else {
+          console.error(err.message);
+        }
+      });
   };
 
   return (
@@ -77,6 +85,9 @@ const Feedback: Component = () => {
                 value={comment()}
                 onInput={(e) => setComment(e.currentTarget.value)}
               />
+              {errors.content && (
+                <span class="form__error">{errors.content}</span>
+              )}
               <div class="comment-form__footer">
                 <p class="comment-form__c-count">
                   <Show

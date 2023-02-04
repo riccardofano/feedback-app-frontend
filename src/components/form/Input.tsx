@@ -1,11 +1,7 @@
 import { Component, JSX, splitProps } from "solid-js";
-import Generic from "./Generic";
+import Generic, { GenericProps } from "./Generic";
 
-interface InputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
-  name: string;
-  description: string;
-  label: string;
-}
+type InputProps = JSX.InputHTMLAttributes<HTMLInputElement> & GenericProps;
 
 const Input: Component<InputProps> = (props) => {
   const [, rest] = splitProps(props, ["name", "description", "label"]);
@@ -15,6 +11,7 @@ const Input: Component<InputProps> = (props) => {
       name={props.name}
       description={props.description}
       label={props.label}
+      error={props.error}
     >
       <input
         {...rest}

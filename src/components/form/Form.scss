@@ -18,11 +18,18 @@
 
   &__label p {
     font-size: var(--text-sm);
+    margin-bottom: var(--spacing-1);
   }
 
   &__description {
     color: var(--clr-grey-600);
-    margin-bottom: var(--spacing-2);
+  }
+
+  &__error {
+    color: var(--clr-red-400);
+    background-color: var(--clr-red-100);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius);
   }
 
   &__input,

@@ -1,5 +1,6 @@
 import { A, useNavigate, useParams } from "@solidjs/router";
 import { Component, createResource, JSX, Show } from "solid-js";
+import { createStore } from "solid-js/store";
 
 import Back from "../../components/Back";
 import Input from "../../components/form/Input";
@@ -23,6 +24,7 @@ const fetcher = async (id: string): Promise<Request> => {
 const EditFeedback: Component = () => {
   const { id } = useParams();
   const [request] = createResource(id, fetcher);
+  const [errors, setErrors] = createStore<{ [key: string]: string }>();
   const navitage = useNavigate();
 
   const handleSubmit: JSX.EventHandler<
@@ -34,7 +36,13 @@ const EditFeedback: Component = () => {
     axios
       .patch(`/feedback/${id}/edit`, encodeFormData(e.currentTarget))
       .then((res) => navitage(`/feedback/${res.data.id}`, { replace: true }))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          setErrors({ ...err.response.data });
+        } else {
+          console.error(err);
+        }
+      });
   };
 
   return (
@@ -62,7 +70,7 @@ const EditFeedback: Component = () => {
                   label="Feedback Title"
                   description="Add a short, descriptive headline"
                   value={request().title}
-                  placeholder="You must insert the title"
+                  error={errors.title}
                   required
                 />
 
@@ -89,7 +97,7 @@ const EditFeedback: Component = () => {
                   label="Feedback Details"
                   description="Include any specific comments on what should be improved, added, etc."
                   value={request().description}
-                  placeholder="You must insert the description"
+                  error={errors.description}
                   required
                 />
 
@@ -100,7 +108,10 @@ const EditFeedback: Component = () => {
                   <A class="btn btn--dark-blue" href="/">
                     Cancel
                   </A>
-                  <button class="btn btn--purple" type="submit">
+                  {/* formnovalidate is here so I can show off the error
+                  messages I get from the server otherwise the browser would not
+                  let you submit the form */}
+                  <button class="btn btn--purple" type="submit" formnovalidate>
                     Edit feedback
                   </button>
                 </div>

@@ -5,6 +5,7 @@ import { Comment as CommentType } from "../types";
 
 import "./Comment.scss";
 import "./form/Form.scss";
+import { createStore } from "solid-js/store";
 
 interface CommentProps {
   comment: CommentType;
@@ -15,6 +16,7 @@ const Comment: Component<CommentProps> = (props) => {
   const [isReplying, setIsReplying] = createSignal(false);
   const [reply, setReply] = createSignal("");
   const [replies, setReplies] = createSignal(props.comment.replies);
+  const [errors, setErrors] = createStore<{ [key: string]: string }>();
 
   const handleReplySubmit = (e: any) => {
     e.preventDefault();
@@ -31,7 +33,13 @@ const Comment: Component<CommentProps> = (props) => {
           setReply("");
         });
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          setErrors(err.response.data);
+        } else {
+          console.error(err.message);
+        }
+      });
   };
 
   return (
@@ -74,6 +82,9 @@ const Comment: Component<CommentProps> = (props) => {
               value={reply()}
               onInput={(e) => setReply(e.currentTarget.value)}
             />
+            {errors.content && (
+              <span class="form__error">{errors.content}</span>
+            )}
             <button class="btn btn--purple" type="submit">
               Post reply
             </button>

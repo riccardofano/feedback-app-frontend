@@ -7,10 +7,12 @@ import Input from "../../components/form/Input";
 import Select from "../../components/form/Select";
 import Textarea from "../../components/form/Textarea";
 import { encodeFormData } from "../../helpers/encodeFormData";
+import { createStore } from "solid-js/store";
 
 const categories = ["UI", "UX", "Enhancement", "Feature", "Bug"];
 
 const NewFeedback: Component = () => {
+  const [errors, setErrors] = createStore<{ [key: string]: string }>();
   const navitage = useNavigate();
 
   const handleSubmit: JSX.EventHandler<
@@ -22,7 +24,13 @@ const NewFeedback: Component = () => {
     axios
       .post("/feedback/new", encodeFormData(e.currentTarget))
       .then((res) => navitage(`/feedback/${res.data.id}`, { replace: true }))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          setErrors({ ...err.response.data });
+        } else {
+          console.error(err);
+        }
+      });
   };
 
   return (
@@ -49,6 +57,7 @@ const NewFeedback: Component = () => {
               description="Add a short, descriptive headline"
               placeholder="You must insert a title"
               value="My awesome feedback"
+              error={errors.title}
               required
             />
 
@@ -66,6 +75,7 @@ const NewFeedback: Component = () => {
               description="Include any specific comments on what should be improved, added, etc."
               placeholder="You must insert a description"
               value="My great feedback details"
+              error={errors.description}
               required
             />
 
