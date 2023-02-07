@@ -49,6 +49,10 @@
     background-color: transparent;
     color: var(--clr-white);
     font-weight: bold;
+
+    & option {
+      color: var(--clr-blue-600);
+    }
   }
 
   & .btn {
