@@ -77,7 +77,7 @@ const Feedback: Component = () => {
               {/* TODO: don't hardcode username */}
               <input type="hidden" name="username" value="velvetround" />
               <textarea
-                class="comment-form__input"
+                class="form__input comment-form__input"
                 name="content"
                 cols="30"
                 rows="2"
