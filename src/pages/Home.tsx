@@ -16,6 +16,7 @@ import Card from "../components/Card";
 const NoSuggestions = lazy(() => import("../components/NoSuggestions"));
 
 import "./Home.scss";
+import { createLocalStorage } from "@solid-primitives/storage";
 
 const fetcher = async (): Promise<{
   currentUser: User;
@@ -43,20 +44,24 @@ const Home: Component = () => {
   const [data] = createResource(fetcher);
 
   const tags = ["All", "UI", "UX", "Enhancement", "Feature", "Bug"];
-  const [currentTag, setCurrentTag] = createSignal("All");
-  const [ordering, setOrdering] = createSignal("most-upvoted");
+  const [filters, setFilters] = createLocalStorage({
+    prefix: "rf-feedback-app",
+  });
+
+  if (!filters.tag) setFilters("tag", "All");
+  if (!filters.ordering) setFilters("ordering", "most-upvoted");
 
   const productRequests = () => {
-    if (currentTag() === "All") {
+    if (filters.tag === "All") {
       return data()?.productRequests;
     }
     return data()?.productRequests.filter(
-      (request) => request.category === currentTag().toLowerCase()
+      (request) => request.category === filters.tag.toLowerCase()
     );
   };
 
   const orderedRequests = () => {
-    const [order, orderBy] = ordering().split("-");
+    const [order, orderBy] = filters.ordering.split("-");
     const orderFn = (a: number, b: number) => {
       return order === "least" ? a - b : b - a;
     };
@@ -78,9 +83,9 @@ const Home: Component = () => {
   return (
     <div class="grid container">
       <Aside
-        currentTag={currentTag()}
+        currentTag={filters.tag}
         tags={tags}
-        handleTagChange={(tag: string) => setCurrentTag(tag)}
+        handleTagChange={(tag: string) => setFilters("tag", tag)}
         roadmap={roadmap}
         roadmapCount={roadmapCount()}
       />
@@ -95,8 +100,8 @@ const Home: Component = () => {
           <label>
             Sort by:
             <select
-              value={ordering()}
-              onChange={(e) => setOrdering(e.currentTarget.value)}
+              value={filters.ordering}
+              onChange={(e) => setFilters("ordering", e.currentTarget.value)}
             >
               <For each={Object.entries(orderingOptions)}>
                 {([value, display]) => <option value={value}>{display}</option>}
