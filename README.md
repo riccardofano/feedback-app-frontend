@@ -1,4 +1,4 @@
-# Feedback App backend
+# Feedback App frontend
 
 Frontend for my version of the [Frontend Mentor Product feedback app](https://www.frontendmentor.io/challenges/product-feedback-app-wbvUYqjR6) challenge.
 
