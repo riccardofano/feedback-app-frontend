@@ -1,6 +1,4 @@
-import { A } from "@solidjs/router";
 import { Component, For } from "solid-js";
-import { countComments } from "../helpers/countComments";
 import { Request } from "../types";
 import Card from "./Card";
 
@@ -25,7 +23,7 @@ const Stack: Component<StackProps> = (props) => {
         <For each={props.requests}>
           {(request) => (
             <li>
-              <Card request={request} type="vertical" color={props.color} />
+              <Card request={request} color={props.color} />
             </li>
           )}
         </For>
