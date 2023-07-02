@@ -1,13 +1,6 @@
 import { A } from "@solidjs/router";
 import { axios } from "../api_config";
-import {
-  Component,
-  createResource,
-  createSignal,
-  For,
-  lazy,
-  Show,
-} from "solid-js";
+import { Component, For, lazy, Show } from "solid-js";
 import { countComments } from "../helpers/countComments";
 import { Request, User } from "../types";
 
@@ -17,15 +10,13 @@ const NoSuggestions = lazy(() => import("../components/NoSuggestions"));
 
 import "./Home.scss";
 import { createLocalStorage } from "@solid-primitives/storage";
+import { createQuery } from "@tanstack/solid-query";
 
 const fetcher = async (): Promise<{
   currentUser: User;
   productRequests: Request[];
 }> => {
-  return axios
-    .get("/feedback/all")
-    .then((res) => res.data)
-    .catch(console.error);
+  return axios.get("/feedback/all").then((res) => res.data);
 };
 
 const roadmap = {
@@ -41,7 +32,7 @@ const orderingOptions = {
 };
 
 const Home: Component = () => {
-  const [data] = createResource(fetcher);
+  const query = createQuery(() => ["posts"], fetcher);
 
   const tags = ["All", "UI", "UX", "Enhancement", "Feature", "Bug"];
   const [filters, setFilters] = createLocalStorage({
@@ -53,9 +44,10 @@ const Home: Component = () => {
 
   const productRequests = () => {
     if (filters.tag === "All") {
-      return data()?.productRequests;
+      return query.data?.productRequests;
     }
-    return data()?.productRequests.filter(
+
+    return query.data?.productRequests.filter(
       (request) => request.category === filters.tag.toLowerCase()
     );
   };
