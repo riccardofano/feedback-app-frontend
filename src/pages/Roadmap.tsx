@@ -1,31 +1,29 @@
 import { A } from "@solidjs/router";
 import { axios } from "../api_config";
-import { Component, createResource, Show } from "solid-js";
+import { Component, Show } from "solid-js";
 import Back from "../components/Back";
 import Stack from "../components/Stack";
 import { Request, User } from "../types";
 
 import "./Roadmap.scss";
+import { createQuery } from "@tanstack/solid-query";
 
 const fetcher = async (): Promise<{
   currentUser: User;
   productRequests: Request[];
 }> => {
-  return axios
-    .get("/feedback/all")
-    .then((res) => res.data)
-    .catch(console.error);
+  return axios.get("/feedback/all").then((res) => res.data);
 };
 
 const Roadmap: Component = () => {
-  const [data] = createResource(fetcher);
+  const query = createQuery(() => ["todos"], fetcher);
 
   // HACK: reset html overflow when you click 'view'
   // from the mobile homepage and the sidebar is open
   document.documentElement.style.overflow = "";
 
   const dividedRequests = () => {
-    return data()?.productRequests.reduce((acc, req) => {
+    return query.data?.productRequests.reduce((acc, req) => {
       acc[req.status] = (acc[req.status] || []).concat([req]);
       return acc;
     }, {});

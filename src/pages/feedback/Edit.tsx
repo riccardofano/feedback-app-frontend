@@ -1,5 +1,5 @@
 import { A, useNavigate, useParams } from "@solidjs/router";
-import { Component, createResource, JSX, Show } from "solid-js";
+import { Component, JSX, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 
 import Back from "../../components/Back";
@@ -10,20 +10,21 @@ import Textarea from "../../components/form/Textarea";
 import { axios } from "../../api_config";
 import { Request } from "../../types";
 import { encodeFormData } from "../../helpers/encodeFormData";
+import { createQuery } from "@tanstack/solid-query";
 
 const categories = ["UI", "UX", "Enhancement", "Feature", "Bug"];
 const statuses = ["Suggestion", "Planned", "In-Progress", "Live"];
 
 const fetcher = async (id: string): Promise<Request> => {
-  return axios
-    .get(`/feedback/${id}`)
-    .then((res) => res.data)
-    .catch(console.error);
+  return axios.get(`/feedback/${id}`).then((res) => res.data);
 };
 
 const EditFeedback: Component = () => {
   const { id } = useParams();
-  const [request] = createResource(id, fetcher);
+  const query = createQuery(
+    () => ["todos", +id],
+    () => fetcher(id)
+  );
   const [errors, setErrors] = createStore<{ [key: string]: string }>();
   const navitage = useNavigate();
 
@@ -53,7 +54,7 @@ const EditFeedback: Component = () => {
         </header>
 
         <main class="form__container">
-          <Show when={request()} fallback={<div>Loading...</div>}>
+          <Show when={query.data} fallback={<div>Loading...</div>}>
             <>
               <img
                 class="floating-icon"
@@ -62,14 +63,16 @@ const EditFeedback: Component = () => {
                 alt=""
               />
 
-              <h1 class="form-heading">Edit &lsquo;{request().title}&rsquo;</h1>
+              <h1 class="form-heading">
+                Edit &lsquo;{query.data.title}&rsquo;
+              </h1>
 
               <form class="form" onSubmit={handleSubmit}>
                 <Input
                   name="title"
                   label="Feedback Title"
                   description="Add a short, descriptive headline"
-                  value={request().title}
+                  value={query.data.title}
                   error={errors.title}
                   required
                 />
@@ -79,7 +82,7 @@ const EditFeedback: Component = () => {
                   label="Category"
                   description="Choose a category for your feedback"
                   options={categories}
-                  value={request().category}
+                  value={query.data.category}
                   required
                 />
 
@@ -88,7 +91,7 @@ const EditFeedback: Component = () => {
                   label="Update Status"
                   description="Change feedback state"
                   options={statuses}
-                  value={request().status}
+                  value={query.data.status}
                   required
                 />
 
@@ -96,7 +99,7 @@ const EditFeedback: Component = () => {
                   name="description"
                   label="Feedback Details"
                   description="Include any specific comments on what should be improved, added, etc."
-                  value={request().description}
+                  value={query.data.description}
                   error={errors.description}
                   required
                 />
