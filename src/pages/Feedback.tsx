@@ -1,5 +1,5 @@
 import { A, useNavigate, useParams } from "@solidjs/router";
-import { Component, createResource, createSignal, For, Show } from "solid-js";
+import { Component, createSignal, For, Show } from "solid-js";
 import Card from "../components/Card";
 import Comment from "../components/Comment";
 
@@ -10,12 +10,24 @@ import Back from "../components/Back";
 import { encodeFormData } from "../helpers/encodeFormData";
 import { Request } from "../types";
 import { createStore } from "solid-js/store";
+import {
+  createMutation,
+  createQuery,
+  useQueryClient,
+} from "@tanstack/solid-query";
 
 const fetcher = async (id: number): Promise<Request> => {
-  return axios
-    .get(`/feedback/${id}`)
-    .then((res) => res.data)
-    .catch((err) => console.error(err));
+  return axios.get(`/feedback/${id}`).then((res) => res.data);
+};
+
+const createComment = async ({
+  id,
+  formData,
+}: {
+  id: number;
+  formData: string;
+}) => {
+  return axios.post(`/feedback/${id}/comment`, formData);
 };
 
 const Feedback: Component = () => {
@@ -25,7 +37,15 @@ const Feedback: Component = () => {
     navigate("/", { replace: true });
   }
 
-  const [request, { mutate }] = createResource(+id, fetcher);
+  const queryClient = useQueryClient();
+  const query = createQuery(
+    () => ["posts", +id],
+    () => fetcher(+id)
+  );
+  const addMutation = createMutation({
+    mutationFn: createComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+  });
   const [errors, setErrors] = createStore<{ [key: string]: string }>();
 
   const [comment, setComment] = createSignal("");
@@ -33,20 +53,15 @@ const Feedback: Component = () => {
 
   const handleNewComment = (e: any) => {
     e.preventDefault();
-
-    axios
-      .post(`/feedback/${id}/comment`, encodeFormData(e.currentTarget))
-      .then((res) => {
-        mutate((prev) => ({ ...prev, comments: [...prev.comments, res.data] }));
-        setComment("");
-      })
-      .catch((err) => {
-        if (err.response && err.response.status === 400) {
-          setErrors(err.response.data);
-        } else {
-          console.error(err.message);
-        }
+    try {
+      addMutation.mutate({
+        id: +id,
+        formData: encodeFormData(e.currentTarget),
       });
+    } catch (err) {
+      setErrors(err.response.data);
+    }
+    setComment("");
   };
 
   return (
@@ -61,12 +76,12 @@ const Feedback: Component = () => {
         </header>
 
         <main class="spacer">
-          <Show when={request()} fallback={<p>Loading...</p>}>
-            <Card request={request()}></Card>
+          <Show when={query.data} fallback={<p>Loading...</p>}>
+            <Card request={query.data}></Card>
 
-            <Show when={request().comments.length > 0}>
+            <Show when={query.data.comments.length > 0}>
               <ul class="comment__list">
-                <For each={request().comments}>
+                <For each={query.data.comments}>
                   {(comment) => <Comment comment={comment} />}
                 </For>
               </ul>
