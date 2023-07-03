@@ -85,7 +85,7 @@ const Aside: Component<AsideProps> = (props) => {
           </ul>
         </section>
       </div>
-      <div class="overlay" />
+      <div class="overlay" onClick={toggleSidebar} />
     </aside>
   );
 };
