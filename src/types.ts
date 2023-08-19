@@ -1,5 +1,7 @@
 export interface Comment {
   id: number;
+  idRequest: number;
+  idParent: number | null;
   content: string;
   replyingTo: string | null;
   user: {

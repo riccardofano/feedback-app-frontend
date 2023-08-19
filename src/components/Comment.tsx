@@ -23,7 +23,7 @@ const Comment: Component<CommentProps> = (props) => {
 
     axios
       .post(
-        `/comments/${props.comment.id}/reply`,
+        `/feedback/${props.comment.idRequest}/comment/${props.comment.id}/reply`,
         encodeFormData(e.currentTarget)
       )
       .then((res) => {
