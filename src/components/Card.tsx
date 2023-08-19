@@ -1,7 +1,7 @@
 import { A } from "@solidjs/router";
 import { Component, createSignal, JSX, mergeProps, Show } from "solid-js";
 
-import { Request } from "../types";
+import { SimpleRequest } from "../types";
 import { countComments } from "../helpers/countComments";
 import "./Card.scss";
 import { axios } from "../api_config";
@@ -9,7 +9,7 @@ import { axios } from "../api_config";
 type onClickEvent = JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>;
 
 interface CardProps {
-  request: Request;
+  request: SimpleRequest;
   color?: string;
 }
 
@@ -67,7 +67,7 @@ const Card: Component<CardProps> = (props) => {
             src="/assets/shared/icon-comments.svg"
             alt=""
           />
-          <span>{countComments(props.request.comments)}</span>
+          <span>{props.request.commentAmount}</span>
         </p>
       </div>
     </A>

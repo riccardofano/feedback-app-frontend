@@ -1,8 +1,7 @@
 import { A } from "@solidjs/router";
 import { axios } from "../api_config";
 import { Component, For, lazy, Show } from "solid-js";
-import { countComments } from "../helpers/countComments";
-import { Request, User } from "../types";
+import { SimpleRequest, User } from "../types";
 
 import Aside from "../components/Aside";
 import Card from "../components/Card";
@@ -14,7 +13,7 @@ import { createQuery } from "@tanstack/solid-query";
 
 const fetcher = async (): Promise<{
   currentUser: User;
-  productRequests: Request[];
+  productRequests: SimpleRequest[];
 }> => {
   return axios.get("/feedback/all").then((res) => res.data);
 };
@@ -62,7 +61,7 @@ const Home: Component = () => {
       if (orderBy === "upvoted") {
         return orderFn(a.upvotes, b.upvotes);
       }
-      return orderFn(countComments(a.comments), countComments(b.comments));
+      return orderFn(a.commentAmount, b.commentAmount);
     });
   };
 

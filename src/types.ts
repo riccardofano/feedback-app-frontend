@@ -12,7 +12,7 @@ export interface Comment {
   replies: Array<Comment>;
 }
 
-export interface Request {
+export type Request = {
   id: number;
   title: string;
   category: string;
@@ -21,7 +21,11 @@ export interface Request {
   status: string;
   description: string;
   comments: Array<Comment>;
-}
+};
+
+export type SimpleRequest = Omit<Request, "comments"> & {
+  commentAmount: number;
+};
 
 export interface User {
   image: string;
