@@ -106,7 +106,7 @@ const Feedback: Component = () => {
               <div class="comment-form__footer">
                 <p class="comment-form__c-count">
                   <Show
-                    when={leftInComment() > 0}
+                    when={leftInComment() >= 0}
                     fallback={
                       <span class="comment-form--danger">
                         Too many characters!
